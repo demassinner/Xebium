@@ -83,6 +83,9 @@ public class SeleniumDriverFixture {
 	}
 
 	private CommandProcessor startWebDriverCommandProcessor(final String browser, String browserUrl) {
+		
+		LOG.debug("mamma mia!!!!!!!!!!!");
+		
 		browserUrl = removeAnchorTag(browserUrl);
 		WebDriver driver;
 
@@ -145,7 +148,7 @@ public class SeleniumDriverFixture {
             driver = new OperaDriver(capabilities);
 		} else {
 			try {
-				driver = new RemoteWebDriverBuilder(browser).newDriver();
+				driver = new RemoteWebDriverBuilder2(browser).newDriver();
 			} catch (Exception e) {
 				throw new RuntimeException("Unknown browser type. Should be one of 'firefox', 'iexplore', 'chrome', " +
                         "'opera', 'opera-mobile-tablet', 'opera-mobile-phone', 'htmlUnit' or 'htmlUnit+js'", e);
@@ -191,9 +194,9 @@ public class SeleniumDriverFixture {
 	 * @param browserUrl
 	 */
 	public void startBrowserOnUrl(final String browser, final String browserUrl) {
+		LOG.debug("Started command processor");
 		setCommandProcessor(startWebDriverCommandProcessor(browser, browserUrl));
 		setTimeoutOnSelenium();
-		LOG.debug("Started command processor");
 	}
 
 	/**

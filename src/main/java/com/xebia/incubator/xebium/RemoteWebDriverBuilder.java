@@ -32,6 +32,8 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RemoteWebDriverBuilder {
 
@@ -39,8 +41,13 @@ public class RemoteWebDriverBuilder {
 	
 	private String remote;
 	private Map<String, String> capabilities;
-
+	
+	static final Logger LOG = LoggerFactory.getLogger(RemoteWebDriverBuilder.class);
+	
 	public RemoteWebDriverBuilder(String json) {
+		
+		LOG.debug("jsonn conf : " + json);
+		
 		JSONObject jsonObject;
 		try {
 			jsonObject = new JSONObject(json);
@@ -92,7 +99,13 @@ public class RemoteWebDriverBuilder {
 	 * @throws MalformedURLException 
 	 */
 	public WebDriver newDriver() throws MalformedURLException {
-		RemoteWebDriver driver = new RemoteWebDriver(getRemote(), getCapabilities());
+		LOG.debug("Skapar ny remote driver");
+		LOG.debug("remote: " + remote);
+		
+        DesiredCapabilities capability = DesiredCapabilities.firefox();
+        capability.setBrowserName("firefox");
+		LOG.debug("humpf!!");
+		RemoteWebDriver driver = new RemoteWebDriver(getRemote(), capability);
 		
         //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
